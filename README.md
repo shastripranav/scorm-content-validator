@@ -1,5 +1,7 @@
 # scorm-validate
 
+[![CI](https://github.com/shastripranav/scorm-content-validator/actions/workflows/ci.yml/badge.svg)](https://github.com/shastripranav/scorm-content-validator/actions/workflows/ci.yml)
+
 CLI tool for validating SCORM 1.2 and SCORM 2004 e-learning packages before uploading to an LMS.
 
 SCORM packages frequently fail when uploaded to Learning Management Systems due to malformed manifests, missing files, or invalid metadata. This tool catches those issues early so you can fix them before deployment.
