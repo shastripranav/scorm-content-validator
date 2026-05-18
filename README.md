@@ -31,23 +31,54 @@ scorm-validate package.zip --fix --output fixed_package.zip
 scorm-validate *.zip
 ```
 
-## Sample Output
+## Example Output
+
+A valid SCORM 1.2 package:
 
 ```
-SCORM Package Validation: course_package.zip
+$ scorm-validate tests/fixtures/valid_scorm12.zip
+
+SCORM Package Validation: tests/fixtures/valid_scorm12.zip
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   Version:  SCORM 1.2
-  Title:    Introduction to Python
-  SCOs:     3 content objects
-  Files:    5 referenced, 5 found
+  Title:    Test Course 1.2
+  SCOs:     2 content objects
+  Files:    3 referenced, 3 found
 
   ✅ Structure ........... 4/4 checks passed
   ✅ Manifest ............ 7/7 checks passed
-  ✅ SCOs ................ 5/5 checks passed
-  ⚠️  Metadata ............ 2/3 checks passed
-     └─ WARNING: No description in metadata
+  ✅ SCOs ................ 4/4 checks passed
+  ✅ Metadata ............ 3/3 checks passed
 
-  Result: VALID (1 warning)
+  Result: VALID
+```
+
+A package whose manifest references files that aren't in the zip:
+
+```
+$ scorm-validate tests/fixtures/missing_files.zip
+
+SCORM Package Validation: tests/fixtures/missing_files.zip
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Version:  SCORM 1.2
+  Title:    Test Course 1.2
+  SCOs:     2 content objects
+  Files:    3 referenced, 0 found
+
+  ✅ Structure ........... 4/4 checks passed
+  ✅ Manifest ............ 7/7 checks passed
+  ❌ Resources ........... 0/5 checks passed
+     └─ ERROR: File 'module1/index.html' referenced in resource 'res-1' not found in package
+     └─ ERROR: File 'module1/style.css' referenced in resource 'res-1' not found in package
+     └─ ERROR: File 'module2/index.html' referenced in resource 'res-2' not found in package
+     └─ ERROR: Resource 'res-1' href 'module1/index.html' not found in package
+     └─ ERROR: Resource 'res-2' href 'module2/index.html' not found in package
+  ❌ SCOs ................ 2/4 checks passed
+     └─ ERROR: SCO 'res-1' launch URL 'module1/index.html' not found in package
+     └─ ERROR: SCO 'res-2' launch URL 'module2/index.html' not found in package
+  ✅ Metadata ............ 3/3 checks passed
+
+  Result: INVALID (7 errors, 0 warning)
 ```
 
 ## What Gets Validated
